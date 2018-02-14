@@ -48,7 +48,9 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
-        $quotes = json_decode(file_get_contents('http://quotes.rest/qod.json?category=inspire'));
+        $client = new \GuzzleHttp\Client();
+        $content = $client->get('http://quotes.rest/qod.json?category=inspire')->getBody();
+        $quotes = json_decode($content);
 
         $quote = $quotes->contents->quotes[0];
         
