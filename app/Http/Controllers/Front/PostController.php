@@ -48,7 +48,11 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
-        return view('front.index', compact('posts'));
+        $quotes = json_decode(file_get_contents('http://quotes.rest/qod.json?category=inspire'));
+
+        $quote = $quotes->contents->quotes[0];
+        
+        return view('front.index', compact('posts', 'quote'));
     }
 
     /**

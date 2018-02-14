@@ -200,6 +200,7 @@
 	      		<div class="copyright">
 		         	<span>© Copyright Abstract 2016</span>
 		         	<span>Design by <a href="http://www.styleshout.com/">styleshout</a></span>
+					<span>Quotes from theysaidso.com</span>
 		         </div>
 
 		         <div id="go-top">
