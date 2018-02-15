@@ -31,10 +31,12 @@ Use https://github.com/bestmomo/laravel5-5-example as a base template
 Done: 
 - Added HTTP request logging, do it with standard write to file PHP logic
 - Fetched quote from API and displayed the result
+- Added test for Http logger
+- Added test for index page view
+- Added acceptance test for contact add/get
+
 
 TODO:
-- Add test for Http logger
-- Add test for index page view
 
 Task descriptions
 1. Refactor request logging, put the implementation details behind a PSR3 interface

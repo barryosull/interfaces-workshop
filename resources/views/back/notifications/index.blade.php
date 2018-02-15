@@ -30,6 +30,7 @@
                         </tr>
                         </tfoot>
                         <tbody>
+                            @php dd($user); @endphp
                             @foreach ($user->unreadNotifications as $notification)
                                 <tr>
                                     @php $user = user($notification->data['user_id']) @endphp
