@@ -2,11 +2,21 @@
 
 namespace App\Http\Middleware;
 
+use App\Infrastructure\Http\Middleware\LoggerNaive;
 use Closure;
+use Psr\Log\LoggerInterface;
 
 class LogRequests
 {
-    const LOG_FILEPATH = "storage/logs/requests.log";
+    const LOG_FILEPATH = LoggerNaive::LOG_FILEPATH;
+
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -16,8 +26,6 @@ class LogRequests
      */
     public function handle($request, Closure $next)
     {
-        $filepath = base_path(self::LOG_FILEPATH);
-
         $log_message = "Request: ".sprintf(
             '%s %s %s',
             $request->getMethod(),
@@ -25,8 +33,8 @@ class LogRequests
             json_encode($request->all())
         )."\n";
 
-        file_put_contents($filepath, $log_message, FILE_APPEND);
-
+        $this->logger->debug($log_message);
+        
         return $next($request);
     }
 }
