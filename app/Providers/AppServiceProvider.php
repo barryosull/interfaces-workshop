@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Infrastructure\Http\Middleware\LoggerFactory;
 use App\Infrastructure\Http\Middleware\LoggerNaive;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -49,10 +50,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(LoggerInterface::class, function(){
-            $log = new Logger('name');
-            $stream_filepath = base_path('storage/logs/requests.log');
-            $log->pushHandler(new StreamHandler($stream_filepath));
-            return $log;
+            return LoggerFactory::makeMonolog();
         });
     }
 }

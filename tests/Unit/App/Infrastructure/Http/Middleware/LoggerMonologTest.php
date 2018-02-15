@@ -1,26 +1,32 @@
 <?php namespace Tests\App\Infrastructure\Http\Middleware;
 
 use App\Infrastructure\Http\Middleware\Filepath;
-use App\Infrastructure\Http\Middleware\LoggerNaive;
+use App\Infrastructure\Http\Middleware\LoggerFactory;
 use Tests\TestCase;
 
-class LoggerNaiveTest extends TestCase
+class LoggerMonologTest extends TestCase
 {
     public function test_log_requests_to_file()
     {
-        $logger = new LoggerNaive();
-        $message = "message\n";
-
+        $logger = LoggerFactory::makeMonolog();
+        $message = "message";
         $logger->debug($message);
 
         $actual = $this->getLastLineOfLogFile();
 
-        $this->assertEquals($message, $actual);
+        $expected = "name.DEBUG: message [] []\n";
+
+        $this->assertEquals($expected, $this->removeDatetime($actual));
     }
 
     private function getLastLineOfLogFile()
     {
         $log_filepath = base_path(Filepath::PATH);
         return `tail -n 1 $log_filepath`;
+    }
+
+    private function removeDatetime($string)
+    {
+        return substr($string, 22);
     }
 }

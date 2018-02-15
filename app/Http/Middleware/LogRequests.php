@@ -8,8 +8,6 @@ use Psr\Log\LoggerInterface;
 
 class LogRequests
 {
-    const LOG_FILEPATH = LoggerNaive::LOG_FILEPATH;
-
     private $logger;
 
     public function __construct(LoggerInterface $logger)
