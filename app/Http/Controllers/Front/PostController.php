@@ -9,6 +9,7 @@ use App\ {
     Models\Tag,
     Models\Category
 };
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -19,6 +20,8 @@ class PostController extends Controller
      * @var \App\Repositories\PostRepository
      */
     protected $postRepository;
+
+    private $guzzle;
 
     /**
      * The pagination number.
@@ -31,12 +34,13 @@ class PostController extends Controller
      * Create a new PostController instance.
      *
      * @param  \App\Repositories\PostRepository $postRepository
-     * @return void
-    */
-    public function __construct(PostRepository $postRepository)
+     * @param Client $guzzle
+     */
+    public function __construct(PostRepository $postRepository, Client $guzzle)
     {
         $this->postRepository = $postRepository;
         $this->nbrPages = config('app.nbrPages.front.posts');
+        $this->guzzle = $guzzle;
     }
 
     /**
@@ -48,8 +52,7 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
-        $client = new \GuzzleHttp\Client();
-        $content = $client->get('http://quotes.rest/qod.json?category=inspire')->getBody();
+        $content = $this->guzzle->get('http://quotes.rest/qod.json?category=inspire')->getBody();
         $quotes = json_decode($content);
 
         $quote = $quotes->contents->quotes[0];
