@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\Services\Quote;
+use App\Infrastructure\Http\Services\QuoteAPI;
+use App\Infrastructure\Http\Services\QuoteFake;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
@@ -44,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment() == 'testing') {
+            $this->app->singleton(Quote::class, QuoteFake::class);
+        } else {
+            $this->app->singleton(Quote::class, QuoteAPI::class);
+        }
     }
 }
