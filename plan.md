@@ -14,13 +14,13 @@
 
 ## Workshop 
 - Take an existing repo
-- Step 1: Simple
+- Task 1: Simple
 	- Extract the logger logic and wrap in the PSR3 interfaces 
 	- Swap the implementation with Monolog
-- Step 2: Advanced
+- Task 2: Advanced
 	- Extract Guzzle API calls, hide behind interface
 	- Use a fake implementation in the acceptance tests
-- Step 3: Showing off
+- Task 3: Showing off
 	- Extract repo logic into interface
 	- Replace with redis impl
 	- Run both at the same time, use existing to check result of the old
@@ -32,5 +32,7 @@ Done:
 - Added HTTP request logging, do it with standard write to file PHP logic
 - Fetched quote from API and displayed the result
 
-TODO:
-- Remove a repository, extract the logic into a controller
+Task descriptions
+1. Refactor request logging, put the implementation details behind a PSR3 interface
+2. Don't hit the real API during acceptance tests, use a fake instead
+3. Store contacts in redis, but keep the DB version, run them side by side using one to check the result of the other, if they don't match, log an error
