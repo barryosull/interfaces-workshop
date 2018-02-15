@@ -2,9 +2,11 @@
 
 @section('main')
 
-    <div class="row">
-        <i>"{{ $quote->quote }}"</i>
-    </div>
+    @if (isset($quote))
+        <div class="row">
+            <i>"{{ $quote->quote }}"</i>
+        </div>
+    @endif
     <!-- masonry
     ================================================== -->
     <section id="bricks">
