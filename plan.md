@@ -32,6 +32,10 @@ Done:
 - Added HTTP request logging, do it with standard write to file PHP logic
 - Fetched quote from API and displayed the result
 
+TODO:
+- Add test for Http logger
+- Add test for index page view
+
 Task descriptions
 1. Refactor request logging, put the implementation details behind a PSR3 interface
 2. Don't hit the real API during acceptance tests, use a fake instead

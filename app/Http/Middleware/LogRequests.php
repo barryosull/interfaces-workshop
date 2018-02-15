@@ -6,6 +6,7 @@ use Closure;
 
 class LogRequests
 {
+    const LOG_FILEPATH = "storage/logs/requests.log";
     /**
      * Handle an incoming request.
      *
@@ -15,15 +16,14 @@ class LogRequests
      */
     public function handle($request, Closure $next)
     {
-        $filepath = storage_path("logs/requests.log");
+        $filepath = base_path(self::LOG_FILEPATH);
 
         $log_message = "Request: ".sprintf(
-            '%s %s %s %s',
+            '%s %s %s',
             $request->getMethod(),
             $request->getRequestUri(),
-            $request->server->get('SERVER_PROTOCOL'),
-            $request->getContent()
-        )."\r\n";
+            json_encode($request->all())
+        )."\n";
 
         file_put_contents($filepath, $log_message, FILE_APPEND);
 
