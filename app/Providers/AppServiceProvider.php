@@ -3,8 +3,8 @@
 namespace App\Providers;
 
 use App\Repositories\ContactRepository;
+use App\Repositories\ContactRepositoryCacheFilesystem;
 use App\Repositories\ContactRepositoryEloquent;
-use App\Repositories\ContactRepositoryRedisCache;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
@@ -48,7 +48,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(ContactRepository::class, function(){
-            return new ContactRepositoryRedisCache(
+            return new ContactRepositoryCacheFilesystem(
                 new ContactRepositoryEloquent()
             );
         });

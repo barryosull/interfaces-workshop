@@ -21,10 +21,10 @@
 	- Extract Guzzle API calls, hide behind interface
 	- Use a fake implementation in the acceptance tests
 - Task 3: Showing off
-	- Extract repo logic into interface
-	- Replace with redis impl
-	- Run both at the same time, use existing to check result of the old
-
+	- Add redis caching to the contacts list
+	- Make it easy to use with or without a cache
+	- Cache must be cleared when a user is stored
+	
 ## Workshop implementation:
 Use https://github.com/bestmomo/laravel5-5-example as a base template
 
@@ -34,11 +34,11 @@ Done:
 - Added test for Http logger
 - Added test for index page view
 - Added acceptance test for contact add/get
-
+- Figured out challenge 3
 
 TODO:
 
 Task descriptions
 1. Refactor request logging, put the implementation details behind a PSR3 interface
 2. Don't hit the real API during acceptance tests, use a fake instead
-3. Store contacts in redis, but keep the DB version, run them side by side using one to check the result of the other, if they don't match, log an error
+3. Cache contact query results, we don't know if redis or filebased is better, implement both and make it easy to use either 

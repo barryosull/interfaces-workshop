@@ -1,9 +1,9 @@
 <?php namespace App\Repositories;
 
 use App\Models\Contact;
-use Redis;
+use Cache;
 
-class ContactRepositoryRedisCache implements ContactRepository
+class ContactRepositoryCacheFilesystem implements ContactRepository
 {
     const STORE = 'contacts.cache';
 
@@ -23,22 +23,22 @@ class ContactRepositoryRedisCache implements ContactRepository
      */
     public function getAll($nbrPages, $parameters)
     {
-        $cache_key = json_encode([$parameters, $nbrPages]);
+        $cache_key = self::STORE.".".json_encode([$parameters, $nbrPages]);
 
-        $cache_results = Redis::hget(self::STORE, $cache_key);
+        $cache_results = Cache::get($cache_key);
 
         if ($cache_results) {
             return unserialize($cache_results);
         }
 
         $contacts = $this->contact_repository->getAll($nbrPages, $parameters);
-        Redis::hset(self::STORE, $cache_key, serialize($contacts));
+        Cache::set($cache_key, serialize($contacts));
         return $contacts;
     }
 
     public function store(Contact $contact)
     {
         $this->contact_repository->store($contact);
-        Redis::del(self::STORE);
+        Cache::clear();
     }
 }
