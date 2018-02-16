@@ -8,5 +8,5 @@
 `cp .env.example .env`;
 `php artisan key:generate`;
 `touch database/database.sqlite`;
-`touch test.database/database.sqlite`;
+`touch database/test.database.sqlite`;
 `php artisan migrate --seed`;
