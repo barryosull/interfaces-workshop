@@ -51,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(ContactRepository::class, function(){
             return new ContactRepositoryTimer(
-                new ContactRepositoryCacheRedis(
+                new ContactRepositoryCacheFilesystem(
                     new ContactRepositoryEloquent()
                 )
             );
