@@ -21,8 +21,11 @@
 	- Extract Guzzle API calls, hide behind interface
 	- Use a fake implementation in the acceptance tests
 - Task 3: Showing off
-	- Add redis caching to the contacts list
-	- Make it easy to use with or without a cache
+	- Implement a cache for getting the list of contacts
+	- Write a cache in both Redis and a file system
+	- Make it easy to switch one version for another
+	- Time how fast each cache is
+	- Make it easy to enable or disable the timer
 	- Cache must be cleared when a user is stored
 	
 ## Workshop implementation:
@@ -41,4 +44,4 @@ TODO:
 Task descriptions
 1. Refactor request logging, put the implementation details behind a PSR3 interface
 2. Don't hit the real API during acceptance tests, use a fake instead
-3. Cache contact query results, we don't know if redis or filebased is better, implement both and make it easy to use either 
+3. Cache the contact query results. We don't know if redis or filebased is better, so implement both, time how they perform 
