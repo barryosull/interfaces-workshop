@@ -9,9 +9,9 @@ use App\ {
     Models\Tag,
     Models\Category
 };
+use Cache;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Cache;
 
 class PostController extends Controller
 {
@@ -54,7 +54,6 @@ class PostController extends Controller
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
         $quote = Cache::remember('quote', 720, function(){
-
             $content = $this->guzzle->get('http://quotes.rest/qod.json?category=inspire')->getBody();
             $quotes = json_decode($content);
 
