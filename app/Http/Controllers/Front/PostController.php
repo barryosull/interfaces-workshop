@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\{
     Http\Controllers\Controller, Http\Requests\SearchRequest, Http\Services\Quote, Repositories\PostRepository, Models\Tag, Models\Category
 };
+use Cache;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -48,10 +49,8 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
-
-
         $quote = $this->quote_service->getQuote();
-        
+
         return view('front.index', compact('posts', 'quote'));
     }
 
