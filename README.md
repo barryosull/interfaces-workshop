@@ -1,5 +1,5 @@
 # Workshop: Using interfaces effectively
-This is a simple Laravel 5.5 PHP app that has been modified for the purpose of this workshop. It's pretty standard blog that's backed by sqlite and runs 
+This is a simple Laravel 5.5 PHP app that has been modified for the purpose of this workshop. It's a standard blog that's backed by sqlite, so there should be nothing surprising. 
 
 ## Getting Started
 In order to run this codebase you'll need the following.
@@ -30,10 +30,12 @@ To run the tests, simple run the following in the root dir of the app.
 As part of this workshop, there are three challenges. 
 
 Notes:
+- Interfaces are the key to each of these.
 - You should work with your team to choose which challenge you'll focus on. 
 - If you complete a challenge feel free to move onto another.
-- You can use whatever library/technologies you like to complete them
+- You can use whatever library/technologies you like to complete them.
 - If you need to modify the tests to get it working, feel free to do so.
+- There are no wrong answers, there are just better implementations
 
 ### 1. PSR3 (Beginner)
 We want to switch from our own naive implementation of a logger to the PSR3 standard
@@ -50,12 +52,12 @@ Notes:
 - When in local/staging/production use the real one
 
 ### 3. Caching and timing (Hardmode)
-The contacts list in admin is constantly getting hit with requests and it's impacting the DB (more pretending please). We want to cache the contact query results. 
+The contacts list in admin is constantly getting hit with requests and it's impacting the DB (more pretending please). To fix this we want to cache the contact query results. 
 We don't know if Redis or a Filesytem cache is better, so implement both, and time how they perform.
 Notes:
-- Implement a cache for getting the list of contacts
 - Write a cache in both Redis and the file system
 - Make it easy to switch one version for another
 - Time how fast each cache is
 - Make it easy to enable or disable the timer
-- Cache must be cleared when a user is stored
+- Cache must be cleared when a user is stored (expect Eloquent to get in the way here)
+
