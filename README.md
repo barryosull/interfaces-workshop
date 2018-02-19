@@ -26,6 +26,9 @@ To run the tests, simple run the following in the root dir of the app.
 ./vendor/bin/phpunit tests/
 ```
 
+### Original Readme
+To login to the admin section, you'll need the login details from the [original readme](/Original-README.md).
+
 ## The Challenges
 As part of this workshop, there are three challenges. 
 
