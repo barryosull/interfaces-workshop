@@ -3,10 +3,17 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Psr\Log\LoggerInterface;
 
 class RequestLogger
 {
-    const LOG_FILEPATH = "storage/logs/requests.log";
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -16,8 +23,6 @@ class RequestLogger
      */
     public function handle($request, Closure $next)
     {
-        $filepath = base_path(self::LOG_FILEPATH);
-
         $log_message = "Request: ".sprintf(
             '%s %s %s',
             $request->getMethod(),
@@ -25,8 +30,8 @@ class RequestLogger
             json_encode($request->all())
         )."\n";
 
-        file_put_contents($filepath, $log_message, FILE_APPEND);
-
+        $this->logger->info($log_message);
+        
         return $next($request);
     }
 }
