@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Infrastructure\Http\Middleware\LoggerNaive;
 use Closure;
 use Psr\Log\LoggerInterface;
 
