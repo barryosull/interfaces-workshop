@@ -3,14 +3,14 @@
 namespace App\Providers;
 
 use App\Http\Services\Quote;
-use App\Infrastructure\Http\Services\QuoteAPI;
-use App\Infrastructure\Http\Services\QuoteFake;
+use App\Http\Services\QuoteAPI;
+use App\Http\Services\QuoteCache;
+use App\Http\Services\QuoteFake;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\HeaderComposer;
-use Laravel\Dusk\DuskServiceProvider;
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -50,7 +50,13 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() == 'testing') {
             $this->app->singleton(Quote::class, QuoteFake::class);
         } else {
-            $this->app->singleton(Quote::class, QuoteAPI::class);
+            $this->app->singleton(Quote::class, function(){
+                return new QuoteCache(
+                    new QuoteAPI(
+                        new Client()
+                    )
+                );
+            });
         }
     }
 }
