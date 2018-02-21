@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class LogRequests
+class RequestLogger
 {
     const LOG_FILEPATH = "storage/logs/requests.log";
     /**
