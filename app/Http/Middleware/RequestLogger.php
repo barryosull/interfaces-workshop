@@ -6,7 +6,7 @@ use App\Infrastructure\Http\Middleware\LoggerNaive;
 use Closure;
 use Psr\Log\LoggerInterface;
 
-class LogRequests
+class RequestLogger
 {
     private $logger;
 
@@ -31,7 +31,7 @@ class LogRequests
             json_encode($request->all())
         )."\n";
 
-        $this->logger->debug($log_message);
+        $this->logger->info($log_message);
         
         return $next($request);
     }

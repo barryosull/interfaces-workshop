@@ -8,6 +8,8 @@ use Illuminate\Foundation\Application;
 
 trait CreatesApplication
 {
+    private static $db_was_reset = false;
+
     /**
      * Creates the application.
      *
@@ -19,19 +21,17 @@ trait CreatesApplication
 
         $app->make(Kernel::class)->bootstrap();
 
-        $this->resetDB();
-        
+        $this->prepareDB();
+
         return $app;
     }
 
-    private static $has_reset_dB = false;
-
-    public function resetDB()
+    public function prepareDB()
     {
-        if (self::$has_reset_dB) {
+        if (self::$db_was_reset) {
             return;
         }
-        Artisan::call("migrate:fresh",  ["--seed"=>true]);
-        self::$has_reset_dB = true;
+        Artisan::call("migrate:fresh");
+        self::$db_was_reset = true;
     }
 }

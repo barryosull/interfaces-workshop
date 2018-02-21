@@ -4,7 +4,7 @@
 
     @if (isset($quote))
         <div class="row">
-            <i>"{{ $quote->quote }}"</i>
+            <i class="quote">"{{ $quote->quote }}"</i>
         </div>
     @endif
     <!-- masonry
