@@ -3,10 +3,11 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Storage;
 
 class RequestLogger
 {
-    const LOG_FILEPATH = "storage/logs/requests.log";
+    const LOGFILE = "requests.log";
     /**
      * Handle an incoming request.
      *
@@ -16,16 +17,13 @@ class RequestLogger
      */
     public function handle($request, Closure $next)
     {
-        $filepath = base_path(self::LOG_FILEPATH);
-
-        $log_message = "Request: ".sprintf(
-            '%s %s %s',
+        $log_message = vsprintf('Request: %s %s %s', [
             $request->getMethod(),
             $request->getRequestUri(),
             json_encode($request->all())
-        )."\n";
+        ]);
 
-        file_put_contents($filepath, $log_message, FILE_APPEND);
+        Storage::disk('log')->append(self::LOGFILE, $log_message);
 
         return $next($request);
     }
