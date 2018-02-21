@@ -1,75 +1,66 @@
-## Laravel 5-5 example ##
+# Workshop: Using interfaces effectively
+This is a simple Laravel 5.5 PHP app that has been modified for the purpose of this workshop. It's a standard blog that's backed by sqlite, so there should be nothing surprising. 
 
-**Laravel 5-5 example** is a tutorial application.
+## Getting Started
+In order to run this codebase you'll need the following.
+System Requirements:
+- PHP 7+
+- Redis
+- SQLite
+- Composer
+- Webserver (apache/nginx)
 
-### Installation ###
+Don't worry if you don't have all this setup on your machine, if you have docker or vagrant, we've got you covered.
 
-* type `git clone https://github.com/bestmomo/laravel5-5-example.git projectname` to clone the repository 
-* type `cd projectname`
-* type `composer install`
-* type `composer update`
-* copy *.env.example* to *.env*
-* type `php artisan key:generate`to generate secure key in *.env* file
-* if you use MySQL in *.env* file :
-   * set DB_CONNECTION
-   * set DB_DATABASE
-   * set DB_USERNAME
-   * set DB_PASSWORD
-* if you use sqlite :
-   * type `touch database/database.sqlite` to create the file
-* type `php artisan migrate --seed` to create and populate tables
-* edit *.env* for emails configuration
+### Docker
+If you have docker installed, then it's much simpler to get started. Simply following [this tutorial](/install-docker.md).
 
-### Include ###
+### Vagrant
+Vagrant is almost as easy as Docket. Simply following [this tutorial](/install-vagrant.md).
 
-* [Styleshout](https://www.styleshout.com/) for front template
-* [CKEditor](http://ckeditor.com) the great editor
-* [Elfinder](https://github.com/Studio-42/elFinder) the nice file manager
-* [Sweat Alert](http://t4t5.github.io/sweetalert/) for the cool alerts
-* [AdminLTE](https://adminlte.io/themes/AdminLTE/index2.html) the great admin template
-* [Gravatar](https://github.com/creativeorange/gravatar) the Gravatar package
-* [Intervention Image](http://image.intervention.io/) for image manipulation
-* [Email confirmation](https://github.com/bestmomo/laravel-email-confirmation) the package for email confirmation
-* [Artisan language](https://github.com/bestmomo/laravel-artisan-language) the package for language strings management
-* [Laravel debugbar](https://github.com/barryvdh/laravel-debugbar)
-* [Etrepat baum](https://github.com/etrepat/baum) for comments management
+### Testing
+After making your changes you'll want to ensure that you haven't broken anything, that's why there are a couple of unit/acceptance tests already in place.
+To run the tests, simple run the following in the root dir of the app.
 
-### Features ###
+```
+./vendor/bin/phpunit tests/
+```
 
-* Home page
-* Custom error pages 403, 404 and 503
-* Authentication (registration, login, logout, password reset, mail confirmation, throttle)
-* Users roles : administrator (all access), redactor (create and edit post, upload and use medias in personnal directory), and user (create comment in blog)
-* Blog with nested comments
-* Search in posts
-* Tags on posts
-* Contact us page
-* Admin dashboard with users, posts, articles, medias, settings, notifications and comments
-* Multi users medias gestion
-* Localization (English, French and Chinese)
-* Application tests
-* Thumbs creation for images
-* Notifications to send emails and notify redactors for new comments
+### Original Readme
+To login to the admin section, you'll need the login details from the [original readme](/Original-README.md).
 
-### Tricks ###
+## The Challenges
+As part of this workshop, there are three challenges. 
 
-To use application the database is seeding with users :
+Notes:
+- Interfaces are the key to each of these.
+- You should work with your team to choose which challenge you'll focus on. 
+- If you complete a challenge feel free to move onto another.
+- You can use whatever library/technologies you like to complete them.
+- If you need to modify the tests to get it working, feel free to do so.
+- There are no wrong answers, there are just better implementations
 
-* Administrator : email = admin@la.fr, password = admin
-* Redactor : email = redac@la.fr, password = redac
-* User : email = walker@la.fr, password = walker
-* User : email = slacker@la.fr, password = slacker
+### 1. PSR3 (Beginner)
+We want to switch from our own naive implementation of a logger to the PSR3 standard
+Notes:
+- Extract the logger logic and wrap in a PSR3 interface
+- Bind your implementation to the interface and inject it into the middleware
+- Swap the implementation with Monolog
 
-### Tests ###
+### 2. Slow API (Intermediate)
+We are connecting to an API to fetch quotes to display in the app. This API is incredibly slow (ok, it isn't, but just pretend it is) and this is slowing down our acceptance tests.
+This is impacting releases and development, so we want to use a fake version during acceptance tests.
+Notes:
+- When testing use the fake
+- When in local/staging/production use the real one
 
-When you want to launch the tests refresh and populate the database :
+### 3. Caching and timing (Hardmode)
+The contacts list in admin is constantly getting hit with requests and it's impacting the DB (more pretending please). To fix this we want to cache the contact query results. 
+We don't know if Redis or a Filesytem cache is better, so implement both, and time how they perform.
+Notes:
+- Write a cache in both Redis and the file system
+- Make it easy to switch one version for another
+- Time how fast each cache is
+- Make it easy to enable or disable the timer
+- Cache must be cleared when a user is stored (expect Eloquent to get in the way here)
 
-`php artisan migrate:fresh --seed`
-
-You must have default settings and **en** language. You must also add provider in **config/app.php**.
-
-You can then use Dusk.
-
-### License ###
-
-This example for Laravel is open-sourced software licensed under the MIT license
