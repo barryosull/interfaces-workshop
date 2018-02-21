@@ -4,15 +4,12 @@ namespace App\Providers;
 
 use App\Repositories\ContactRepository;
 use App\Repositories\ContactRepositoryCacheFilesystem;
-use App\Repositories\ContactRepositoryCacheRedis;
 use App\Repositories\ContactRepositoryEloquent;
 use App\Repositories\ContactRepositoryTimer;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\HeaderComposer;
-use Laravel\Dusk\DuskServiceProvider;
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {

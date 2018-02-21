@@ -1,6 +1,7 @@
 <?php namespace App\Repositories;
 
 use App\Models\Contact;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ContactRepositoryTimer implements ContactRepository
 {
@@ -10,15 +11,8 @@ class ContactRepositoryTimer implements ContactRepository
     {
         $this->repo = $contact_repository;
     }
-
-    /**
-     * Get contacts paginate.
-     *
-     * @param  int $nbrPages
-     * @param  array $parameters
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getAll($nbrPages, $parameters)
+    
+    public function getAll($nbrPages, $parameters): LengthAwarePaginator
     {
         $start_time = microtime(true);
         $contacts = $this->repo->getAll($nbrPages, $parameters);

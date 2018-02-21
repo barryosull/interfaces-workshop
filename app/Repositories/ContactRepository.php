@@ -1,17 +1,11 @@
 <?php namespace App\Repositories;
 
 use App\Models\Contact;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface ContactRepository
 {
-    /**
-     * Get contacts paginate.
-     *
-     * @param  int $nbrPages
-     * @param  array $parameters
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getAll($nbrPages, $parameters);
+    public function getAll($nbrPages, $parameters): LengthAwarePaginator;
 
     public function store(Contact $contact);
 }
