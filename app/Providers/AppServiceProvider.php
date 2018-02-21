@@ -50,7 +50,10 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(LoggerInterface::class, function(){
-            return LoggerFactory::makeMonolog();
+            $log = new Logger('name');
+            $stream_filepath = base_path("storage/logs/requests.log");
+            $log->pushHandler(new StreamHandler($stream_filepath));
+            return $log;
         });
     }
 }
