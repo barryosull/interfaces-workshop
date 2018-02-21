@@ -2,14 +2,10 @@
 
 namespace App\Providers;
 
-use App\Infrastructure\Http\Middleware\LoggerFactory;
-use App\Infrastructure\Http\Middleware\LoggerNaive;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\HeaderComposer;
-use Laravel\Dusk\DuskServiceProvider;
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
