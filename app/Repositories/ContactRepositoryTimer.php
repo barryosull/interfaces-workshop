@@ -11,7 +11,7 @@ class ContactRepositoryTimer implements ContactRepository
     {
         $this->repo = $contact_repository;
     }
-    
+
     public function getAll($nbrPages, $parameters): LengthAwarePaginator
     {
         $start_time = microtime(true);
