@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\ {
-    Http\Controllers\Controller,
-    Http\Requests\SearchRequest,
-    Repositories\PostRepository,
-    Models\Tag,
-    Models\Category
+use App\{
+    Http\Controllers\Controller, Http\Requests\SearchRequest, Http\Services\Quote, Repositories\PostRepository, Models\Tag, Models\Category
 };
 use Cache;
 use GuzzleHttp\Client;
@@ -22,7 +18,7 @@ class PostController extends Controller
      */
     protected $postRepository;
 
-    private $guzzle;
+    private $quote_service;
 
     /**
      * The pagination number.
@@ -37,11 +33,11 @@ class PostController extends Controller
      * @param  \App\Repositories\PostRepository $postRepository
      * @param Client $guzzle
      */
-    public function __construct(PostRepository $postRepository, Client $guzzle)
+    public function __construct(PostRepository $postRepository, Quote $quote_service)
     {
         $this->postRepository = $postRepository;
         $this->nbrPages = config('app.nbrPages.front.posts');
-        $this->guzzle = $guzzle;
+        $this->quote_service = $quote_service;
     }
 
     /**
@@ -53,15 +49,8 @@ class PostController extends Controller
     {
         $posts = $this->postRepository->getActiveOrderByDate($this->nbrPages);
 
-        $quote = Cache::remember('quote', 720, function(){
+        $quote = $this->quote_service->getQuote();
 
-            $content = $this->guzzle->get('http://quotes.rest/qod.json?category=inspire')->getBody();
-            $quotes = json_decode($content);
-
-            return $quotes->contents->quotes[0];
-
-        });
-        
         return view('front.index', compact('posts', 'quote'));
     }
 
