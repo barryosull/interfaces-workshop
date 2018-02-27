@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Repositories\ContactRepository;
+use App\Repositories\ContactRepositoryCacheFilesystem;
+use App\Repositories\ContactRepositoryEloquent;
+use App\Repositories\ContactRepositoryTimer;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Http\ViewComposers\MenuComposer;
 use App\Http\ViewComposers\HeaderComposer;
-use Laravel\Dusk\DuskServiceProvider;
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(ContactRepository::class, function(){
+            return new ContactRepositoryTimer(
+                new ContactRepositoryCacheFilesystem(
+                    new ContactRepositoryEloquent()
+                )
+            );
+        });
     }
 }

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\ {
-    Http\Controllers\Controller,
-    Http\Requests\ContactRequest,
-    Models\Contact
+use App\{
+    Http\Controllers\Controller, Http\Requests\ContactRequest, Models\Contact, Repositories\ContactRepository
 };
 
 class ContactController extends Controller
 {
+    private $contact_repository;
     /**
      * Create a new ContactController instance.
      *
      */
-    public function __construct()
+    public function __construct(ContactRepository $contact_repository)
     {
+        $this->contact_repository = $contact_repository;
         $this->middleware('guest');
     }
 
@@ -37,7 +37,9 @@ class ContactController extends Controller
      */
     public function store(ContactRequest $request)
     {
-        Contact::create ($request->all ());
+        $contact = (new Contact())->fill($request->all());
+
+        $this->contact_repository->store($contact);
 
         return back ()->with ('ok', __('Your message has been recorded, we will respond as soon as possible.'));
     }

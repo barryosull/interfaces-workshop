@@ -1,24 +1,11 @@
-<?php
-
-namespace App\Repositories;
+<?php namespace App\Repositories;
 
 use App\Models\Contact;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ContactRepository
+interface ContactRepository
 {
-    /**
-     * Get contacts paginate.
-     *
-     * @param  int  $nbrPages
-     * @param  array  $parameters
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
-     */
-    public function getAll($nbrPages, $parameters)
-    {
-        return Contact::with ('ingoing')
-            ->latest()
-            ->when ($parameters['new'], function ($query) {
-                $query->has ('ingoing');
-            })->paginate($nbrPages);
-    }
+    public function getAll($nbrPages, $parameters): LengthAwarePaginator;
+
+    public function store(Contact $contact);
 }
